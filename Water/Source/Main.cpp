@@ -1,42 +1,44 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "Game.h"
+#include "CustomException.h"
+#include <optional>
 
-int main(void)
+int main()
 {
-    GLFWwindow* window;
-
-    /* Initialize the library */
-    if (!glfwInit())
-        return -1;
-
-    /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-    if (!window)
+    // Using std::optional in order to defer the construction of game
+    std::optional<Game> game;
+    try
     {
-        glfwTerminate();
-        return -1;
+        game.emplace();
+    }
+    catch (const CustomException& exception)
+    {
+        std::cerr << exception.what() << std::endl;
+    }
+    catch (const std::exception& exception)
+    {
+        std::cerr << exception.what() << std::endl;
+    }
+    catch (...)
+    {
+        std::cerr << "Unknown exception" << std::endl;
+    }
+    
+    try
+    {
+        game->Loop();
+    }
+    catch (const CustomException& exception)
+    {
+        std::cerr << exception.what() << std::endl;
+    }
+    catch (const std::exception& exception)
+    {
+        std::cerr << exception.what() << std::endl;
+    }
+    catch (...)
+    {
+        std::cerr << "Unknown exception" << std::endl;
     }
 
-    /* Make the window's context current */
-    glfwMakeContextCurrent(window);
-
-
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
-
-        /* Poll for and process events */
-        glfwPollEvents();
-    }
-
-
-
-
-    glfwTerminate();
     return 0;
 }

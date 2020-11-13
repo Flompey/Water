@@ -3,8 +3,14 @@
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\PrecompiledHeader.cpp" />
+    <ClCompile Include="Source\Window.cpp" />
+    <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\CustomException.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\PrecompiledHeader.h" />
+    <ClInclude Include="Source\Window.h" />
+    <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\CustomException.h" />
   </ItemGroup>
 </Project>
