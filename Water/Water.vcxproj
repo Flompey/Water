@@ -133,6 +133,8 @@
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\Include\;$(SolutionDir)Dependencies\GLEW\Include\</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>PrecompiledHeader.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +152,8 @@
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\Include\;$(SolutionDir)Dependencies\GLEW\Include\</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>PrecompiledHeader.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -162,6 +166,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\PrecompiledHeader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\PrecompiledHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
