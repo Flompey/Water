@@ -1,8 +1,7 @@
 #pragma once
-#include "PrecompiledHeader.h"
 #include <exception>
 
-#define CreateCustomException(message) CustomException(message, __FILE__, __LINE__)
+#define CREATE_CUSTOM_EXCEPTION(message) CustomException(message, __FILE__, __LINE__)
 
 class CustomException : public std::exception
 {

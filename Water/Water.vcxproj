@@ -132,10 +132,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\Include\;$(SolutionDir)Dependencies\GLEW\Include\</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>PrecompiledHeader.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\Include\;$(SolutionDir)Dependencies\GLEW\Include\;$(ProjectDir)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Source/PrecompiledHeader.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ForcedIncludeFiles>Source/PrecompiledHeader.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,10 +153,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\Include\;$(SolutionDir)Dependencies\GLEW\Include\</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>PrecompiledHeader.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\Include\;$(SolutionDir)Dependencies\GLEW\Include\;$(ProjectDir)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Source/PrecompiledHeader.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <ForcedIncludeFiles>Source/PrecompiledHeader.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -167,6 +169,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Benchmark\Data\SessionData.cpp" />
+    <ClCompile Include="Source\Benchmark\Data\ThreadData.cpp" />
+    <ClCompile Include="Source\Benchmark\Data\TimingData.cpp" />
+    <ClCompile Include="Source\Benchmark\BenchmarkEvent.cpp" />
+    <ClCompile Include="Source\Benchmark\BenchmarkEventFactory.cpp" />
+    <ClCompile Include="Source\Benchmark\BenchmarkManager.cpp" />
+    <ClCompile Include="Source\Benchmark\BenchmarkSession.cpp" />
     <ClCompile Include="Source\CustomException.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -177,8 +186,20 @@
     <ClCompile Include="Source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Benchmark\Data\All.h" />
+    <ClInclude Include="Source\Benchmark\Data\SessionData.h" />
+    <ClInclude Include="Source\Benchmark\Data\ThreadData.h" />
+    <ClInclude Include="Source\Benchmark\Data\TimingData.h" />
+    <ClInclude Include="Source\Benchmark\BenchmarkEvent.h" />
+    <ClInclude Include="Source\Benchmark\BenchmarkEventFactory.h" />
+    <ClInclude Include="Source\Benchmark\BenchmarkManager.h" />
+    <ClInclude Include="Source\Benchmark\BenchmarkSession.h" />
+    <ClInclude Include="Source\Benchmark\BenchmarkMacros.h" />
+    <ClInclude Include="Source\Benchmark\BenchmarkTimer.h" />
     <ClInclude Include="Source\CustomException.h" />
     <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\Log\ErrorLog.h" />
+    <ClInclude Include="Source\Log\Log.h" />
     <ClInclude Include="Source\PrecompiledHeader.h" />
     <ClInclude Include="Source\Window.h" />
   </ItemGroup>

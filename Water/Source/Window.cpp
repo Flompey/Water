@@ -1,5 +1,4 @@
 #include "Window.h"
-#include <assert.h>
 #include "CustomException.h"
 
 Window::Window(const std::string& title, int width, int height)
@@ -26,7 +25,7 @@ void Window::InitializeGLFW(const std::string& title)
     // Initialize GLFW
     if (!glfwInit())
     {
-        throw CreateCustomException("Failed to initialize GLFW");
+        throw CREATE_CUSTOM_EXCEPTION("Failed to initialize GLFW");
     }
 
     // Create the window 
@@ -34,7 +33,7 @@ void Window::InitializeGLFW(const std::string& title)
     if (!mGlfwWindow)
     {
         glfwTerminate();
-        throw CreateCustomException("Failed to create the GLFW window");
+        throw CREATE_CUSTOM_EXCEPTION("Failed to create the GLFW window");
     }
 
     // Make the window's context current
@@ -47,7 +46,7 @@ void Window::InitializeGLEW() const
     if (GLEW_OK != status)
     { 
         std::string errorString = reinterpret_cast<const char*>(glewGetErrorString(status));
-        throw CreateCustomException("Failed to initialize GLEW\n" + errorString);
+        throw CREATE_CUSTOM_EXCEPTION("Failed to initialize GLEW\n" + errorString);
     }
 }
 
