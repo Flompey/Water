@@ -16,6 +16,12 @@ public:
 
 	void SwapBuffers() const;
 	void PollEvents() const;
+
+	// One should not be able to copy nor move a "Window" instance
+	Window(const Window& other) = delete;
+	Window& operator=(const Window& other) = delete;
+	Window(Window&& other) = delete;
+	Window& operator=(Window&& other) = delete;
 private:
 	void InitializeGLFW(const std::string& title);
 	void InitializeGLEW() const;
