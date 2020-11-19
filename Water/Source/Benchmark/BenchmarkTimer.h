@@ -41,7 +41,11 @@ namespace benchmark
 			benchmark::Manager::Get().Benchmark(
 				benchmark::data::Timing{ mName, startTimepoint, duration, hashedThreadId });
 		}
-
+		// One should not be able to copy nor move a "BasicTimer" instance
+		BasicTimer(const BasicTimer& other) = delete;
+		BasicTimer& operator=(const BasicTimer& other) = delete;
+		BasicTimer(BasicTimer&& other) = delete;
+		BasicTimer& operator=(BasicTimer&& other) = delete;
 	private:
 		C mClock;
 		typename C::time_point mStartTimePoint;
