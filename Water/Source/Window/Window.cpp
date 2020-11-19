@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "CustomException.h"
+#include "../CustomException.h"
 
 Window::Window(const std::string& title, int width, int height)
 	:
@@ -48,6 +48,11 @@ void Window::InitializeGLEW() const
         std::string errorString = reinterpret_cast<const char*>(glewGetErrorString(status));
         throw CREATE_CUSTOM_EXCEPTION("Failed to initialize GLEW\n" + errorString);
     }
+}
+
+GLFWwindow* Window::GetGlfwWindow()
+{
+    return mGlfwWindow;
 }
 
 int Window::GetWidth()

@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+class WindowAccessSpecifier;
+
 // Singleton
 class Window
 {
@@ -25,7 +27,9 @@ public:
 private:
 	void InitializeGLFW(const std::string& title);
 	void InitializeGLEW() const;
+	GLFWwindow* GetGlfwWindow();
 private:
+	friend class WindowAccessSpecifier;
 	// We store a static version of the only object of this class, 
 	// in order to be able to access the width and height statically
 	static inline Window* msWindow = nullptr;

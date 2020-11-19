@@ -12,8 +12,8 @@ namespace benchmark
 	private:
 		Event(std::initializer_list<std::pair<std::string, std::string>> attributesAndValues);
 
-		private:
-			friend class EventFactory;
-			std::string mData;
+	private:
+		friend class EventFactory;
+		std::string mData;
 	};
 }

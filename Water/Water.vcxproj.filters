@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\PrecompiledHeader.cpp" />
-    <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\CustomException.cpp" />
     <ClCompile Include="Source\Benchmark\Data\SessionData.cpp" />
@@ -13,10 +12,12 @@
     <ClCompile Include="Source\Benchmark\BenchmarkEventFactory.cpp" />
     <ClCompile Include="Source\Benchmark\BenchmarkManager.cpp" />
     <ClCompile Include="Source\Benchmark\BenchmarkSession.cpp" />
+    <ClCompile Include="Source\Keyboard.cpp" />
+    <ClCompile Include="Source\Window\WindowAccessSpecifier.cpp" />
+    <ClCompile Include="Source\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\PrecompiledHeader.h" />
-    <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\CustomException.h" />
     <ClInclude Include="Source\Benchmark\Data\All.h" />
@@ -31,5 +32,8 @@
     <ClInclude Include="Source\Benchmark\BenchmarkTimer.h" />
     <ClInclude Include="Source\Log\ErrorLog.h" />
     <ClInclude Include="Source\Log\Log.h" />
+    <ClInclude Include="Source\Keyboard.h" />
+    <ClInclude Include="Source\Window\WindowAccessSpecifier.h" />
+    <ClInclude Include="Source\Window\Window.h" />
   </ItemGroup>
 </Project>

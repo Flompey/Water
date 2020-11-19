@@ -3,7 +3,8 @@
 
 Game::Game()
 	:
-    mWindow("Water", 1920, 1080)
+    mWindow("Water", 1920, 1080),
+    mKeyboard(mWindow)
 {
     NAME_THREAD("Main");
 }

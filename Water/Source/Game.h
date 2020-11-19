@@ -1,5 +1,6 @@
 #pragma once
-#include "Window.h"
+#include "Window/Window.h"
+#include "Keyboard.h"
 
 class Game
 {
@@ -14,4 +15,5 @@ private:
 	void Render();
 private:
 	Window mWindow;
+	Keyboard mKeyboard;
 };
