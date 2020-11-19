@@ -24,14 +24,14 @@ namespace benchmark
 			:
 			mName(name)
 		{
-			mStartTimePoint = mClock.now();
+			mStartTimePoint = C::now();
 		}
 		~BasicTimer()
 		{
 			const auto startDuration = 
 				std::chrono::duration_cast<std::chrono::microseconds>(mStartTimePoint.time_since_epoch());
 			const auto endDuration = 
-				std::chrono::duration_cast<std::chrono::microseconds>(mClock.now().time_since_epoch());
+				std::chrono::duration_cast<std::chrono::microseconds>(C::now().time_since_epoch());
 
 			const long long duration = (endDuration - startDuration).count();
 			const long long startTimepoint = startDuration.count();
@@ -47,7 +47,6 @@ namespace benchmark
 		BasicTimer(BasicTimer&& other) = delete;
 		BasicTimer& operator=(BasicTimer&& other) = delete;
 	private:
-		C mClock;
 		typename C::time_point mStartTimePoint;
 		std::string mName;
 	};
