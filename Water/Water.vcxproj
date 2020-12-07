@@ -198,6 +198,7 @@
     <ClInclude Include="Source\Benchmark\BenchmarkSession.h" />
     <ClInclude Include="Source\Benchmark\BenchmarkMacros.h" />
     <ClInclude Include="Source\Benchmark\BenchmarkTimer.h" />
+    <ClInclude Include="Source\CustomConcepts.h" />
     <ClInclude Include="Source\CustomException.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Iterator\Container\ContainerBase.h" />

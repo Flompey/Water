@@ -45,5 +45,6 @@
     <ClInclude Include="Source\Iterator\Container\ContainerDebugInfo.h" />
     <ClInclude Include="Source\Iterator\Container\ContainerBase.h" />
     <ClInclude Include="Source\Iterator\IteratorMacro.h" />
+    <ClInclude Include="Source\CustomConcepts.h" />
   </ItemGroup>
 </Project>

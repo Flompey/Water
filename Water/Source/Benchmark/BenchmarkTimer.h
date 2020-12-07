@@ -2,20 +2,10 @@
 #include <chrono>
 #include "BenchmarkManager.h"
 #include <thread>
+#include "../CustomConcepts.h"
 
 namespace benchmark
 {
-	template<class T>
-	concept Clock = requires
-	{
-		typename T::rep;
-		typename T::period;
-		typename T::duration;
-		typename T::time_point;
-		T::is_steady;
-		T::now();
-	};
-
 	template<Clock C>
 	class BasicTimer
 	{
