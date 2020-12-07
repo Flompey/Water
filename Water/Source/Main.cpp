@@ -6,7 +6,7 @@
 
 int main()
 {
-    #if BENCHMARKING
+    #if ENABLE_BENCHMARKING
         // Using "std::optional" in order to defer the construction of "benchmarkSession"
         std::optional<benchmark::Session> benchmarkSession;
     #endif
@@ -15,7 +15,7 @@ int main()
     std::optional<Game> game;
     try
     {
-        #if BENCHMARKING
+        #if ENABLE_BENCHMARKING
             // Creating a benchmark session that exists during the entire lifetime of "game"
             benchmarkSession.emplace("Main");
         #endif  

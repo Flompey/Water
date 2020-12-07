@@ -4,14 +4,14 @@
 #include "BenchmarkManager.h"
 
 // Enables/disables all the benchmarking
-#define BENCHMARKING 1
+#define ENABLE_BENCHMARKING 1
 #define ALLOW_BENCHMARK_SAVING 1
 
 #define CONCATENATE(a, b) CONCATENATE_I(a, b)
 #define CONCATENATE_I(a, b) CONCATENATE_II(~, a ## b)
 #define CONCATENATE_II(p, res) res
 
-#if BENCHMARKING
+#if ENABLE_BENCHMARKING
 // Enables benchmarking for the scope
 #define BENCHMARK benchmark::Timer CONCATENATE(timer, __LINE__)(__FUNCSIG__)
 #define NAMED_BENCHMARK(name) benchmark::Timer CONCATENATE(timer, __LINE__)(name)
