@@ -1,6 +1,6 @@
 #pragma once
 #include "RawVector.h"
-#include "VectorIterator.h"
+#include "Source/Iterator/RandomAccessIterator.h"
 
 // Things to add:
 // cout support
@@ -9,40 +9,36 @@ requires (N >= 2)
 class BasicVector : public RawVector<T, N>
 {
 public:
-	using Iterator = VectorIterator<T>;
-
+	using Iterator = RandomAccessIterator<T>;
 	template<class... ArgTypes>
 	requires(sizeof...(ArgTypes) == N)
 	BasicVector(ArgTypes... arguments)
 		:
 		Base{ arguments... }
 	{
-		Base::InitializeVectorDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
+		Base::InitializeContainerDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
 	}
+
+	// Any time we construct a "BasicVector" we need to initialize the container info, hence
+	// we overload the copy and default constructors
 	BasicVector()
 	{
-		Base::InitializeVectorDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
+		Base::InitializeContainerDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
 	}
 	BasicVector(const BasicVector& other)
 		:
 		Base(other)
 	{
-		Base::InitializeVectorDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
-	}
-	BasicVector(BasicVector&& other)
-		:
-		Base(other)
-	{
-		Base::InitializeVectorDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
+		Base::InitializeContainerDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
 	}
 	
 	[[nodiscard]] Iterator begin()
 	{
-		return Iterator(Base::GetPointerToData(), Base::GetVectorDebugInfo());
+		return Iterator(Base::GetPointerToData(), Base::GetContainerDebugInfo());
 	}
 	[[nodiscard]] Iterator end()
 	{
-		return Iterator(Base::GetPointerToData()+N, Base::GetVectorDebugInfo());
+		return Iterator(Base::GetPointerToData()+N, Base::GetContainerDebugInfo());
 	}
 
 	[[nodiscard]] T& operator[](size_t index)
@@ -123,6 +119,7 @@ public:
 			(*this)[i] /= value;
 		}
 	}
+
 	[[nodiscard]] BasicVector operator+(const BasicVector& other) const
 	{
 		BasicVector sum;

@@ -1,17 +1,8 @@
 #pragma once
-#include "RawVectorDebugBase.h"
-#include "RawVectorReleaseBase.h"
-
-#ifdef DEBUG
-template<class T>
-using RawVectorBase = RawVectorDebugBase<T>;
-#else
-template<class T>
-using RawVectorBase = RawVectorReleaseBase<T>;
-#endif
+#include "Source/Iterator/Container/ContainerBase.h"
 
 template<class T, int N>
-struct RawVector : public RawVectorBase<T>
+struct RawVector : public ContainerBase<T>
 {
 	RawVector(const std::initializer_list<T>& values)
 	{
@@ -24,6 +15,7 @@ struct RawVector : public RawVectorBase<T>
 			values[i] = (T)0;
 		}
 	}
+
 	T* GetPointerToData()
 	{
 		return &values[0];
@@ -37,13 +29,15 @@ struct RawVector : public RawVectorBase<T>
 };
 
 template<class T>
-struct RawVector<T, 2> : public RawVectorBase<T>
+struct RawVector<T, 2> : public ContainerBase<T>
 {
 	RawVector(T x, T y)
 		:
 		x(x),
 		y(y)
 	{}
+	RawVector() = default;
+
 	T* GetPointerToData()
 	{
 		return &x;
@@ -58,7 +52,7 @@ struct RawVector<T, 2> : public RawVectorBase<T>
 };
 
 template<class T>
-struct RawVector<T, 3> : public RawVectorBase<T>
+struct RawVector<T, 3> : public ContainerBase<T>
 {
 	RawVector(T x, T y, T z)
 		:
@@ -66,6 +60,7 @@ struct RawVector<T, 3> : public RawVectorBase<T>
 		y(y),
 		z(z)
 	{}
+	RawVector() = default;
 
 	T* GetPointerToData()
 	{
@@ -82,7 +77,7 @@ struct RawVector<T, 3> : public RawVectorBase<T>
 };
 
 template<class T>
-struct RawVector<T, 4> : public RawVectorBase<T>
+struct RawVector<T, 4> : public ContainerBase<T>
 {
 	RawVector(T x, T y, T z, T w)
 		:
@@ -91,6 +86,8 @@ struct RawVector<T, 4> : public RawVectorBase<T>
 		z(z),
 		w(w)
 	{}
+	RawVector() = default;
+
 	T* GetPointerToData()
 	{
 		return &x;

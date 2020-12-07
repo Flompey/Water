@@ -35,5 +35,15 @@
     <ClInclude Include="Source\Keyboard.h" />
     <ClInclude Include="Source\Window\WindowAccessSpecifier.h" />
     <ClInclude Include="Source\Window\Window.h" />
+    <ClInclude Include="Source\Mathematics\Vector\Vector.h" />
+    <ClInclude Include="Source\Mathematics\Vector\RawVector.h" />
+    <ClInclude Include="Source\Iterator\RandomAccessIterator.h" />
+    <ClInclude Include="Source\Iterator\RandomAccessIteratorDebugBase.h" />
+    <ClInclude Include="Source\Iterator\RandomAccessIteratorReleaseBase.h" />
+    <ClInclude Include="Source\Iterator\Container\ContainerReleaseBase.h" />
+    <ClInclude Include="Source\Iterator\Container\ContainerDebugBase.h" />
+    <ClInclude Include="Source\Iterator\Container\ContainerDebugInfo.h" />
+    <ClInclude Include="Source\Iterator\Container\ContainerBase.h" />
+    <ClInclude Include="Source\Iterator\IteratorMacro.h" />
   </ItemGroup>
 </Project>
