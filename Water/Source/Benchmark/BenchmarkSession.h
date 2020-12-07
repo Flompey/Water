@@ -10,7 +10,5 @@ namespace benchmark
 		// One should not be able to copy nor move a "Session" instance
 		Session(const Session& other) = delete;
 		Session& operator=(const Session& other) = delete;
-		Session(Session&& other) = delete;
-		Session& operator=(Session&& other) = delete;
 	};
 }

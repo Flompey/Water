@@ -34,8 +34,6 @@ namespace benchmark
 		// One should not be able to copy nor move a "BasicTimer" instance
 		BasicTimer(const BasicTimer& other) = delete;
 		BasicTimer& operator=(const BasicTimer& other) = delete;
-		BasicTimer(BasicTimer&& other) = delete;
-		BasicTimer& operator=(BasicTimer&& other) = delete;
 	private:
 		typename C::time_point mStartTimePoint;
 		std::string mName;
