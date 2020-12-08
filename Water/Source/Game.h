@@ -13,7 +13,9 @@ private:
 	void Loop();
 	void Update();
 	void Render();
+	void CloseWindowCallback();
 private:
 	Window mWindow;
 	Keyboard mKeyboard;
+	bool mWindowShouldClose = false;
 };

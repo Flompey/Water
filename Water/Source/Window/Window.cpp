@@ -8,16 +8,27 @@ Window::Window(const std::string& title, int width, int height)
 {
 	// There should only be one instance of this class
 	assert(!msWindow);
-	
 	msWindow = this;
 
     InitializeGLFW(title);
     InitializeGLEW();
+
+    glfwSetWindowCloseCallback(mGlfwWindow, CloseCallback);
 }
 
 Window::~Window()
 {
     glfwTerminate();
+}
+
+void Window::SetCloseCallback(std::function<void()> callback)
+{
+    mCloseCallback = callback;
+}
+
+void Window::CloseCallback(GLFWwindow* window)
+{
+    msWindow->mCloseCallback();
 }
 
 void Window::InitializeGLFW(const std::string& title)
