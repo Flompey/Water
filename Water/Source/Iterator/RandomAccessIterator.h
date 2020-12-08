@@ -171,11 +171,11 @@ public:
 		return !(*this < other);
 	}
 
-	private:
-		bool IsCompatible(const RandomAccessIterator& other) const
-		{
-			return Base::GetContainerDebugInfo() == other.GetContainerDebugInfo();
-		}
+private:
+	bool IsCompatible(const RandomAccessIterator& other) const
+	{
+		return Base::GetContainerDebugInfo() == other.GetContainerDebugInfo();
+	}
 private:
 	using Base = RandomAccessIteratorBase<T>;
 	friend class ContainerDebugInfo<T>;

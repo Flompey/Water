@@ -28,8 +28,8 @@ public:
 	void RemoveIterator(RandomAccessIteratorDebugBase<T>* iterator)
 	{
 		size_t count = mActiveIterators.remove(iterator);
-		// Make sure that we actually removed at least one iterator
-		assert(count > 0);
+		// Make sure we removed precisely one iterator
+		assert(count == 1);
 	}
 private:
 	void InvalidateIterators()

@@ -15,6 +15,10 @@ protected:
 	{
 		return true;
 	}
+	const ContainerDebugInfo<T>* const GetContainerDebugInfo() const
+	{
+		return nullptr;
+	}
 	void AddToContainer() noexcept
 	{
 	}
