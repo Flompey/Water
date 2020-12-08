@@ -1,7 +1,5 @@
 #include "Game.h"
 #include "Benchmark/BenchmarkMacros.h"
-#include "Mathematics/Vector/Vector.h"
-#include <random>
 
 Game::Game()
 	:
@@ -12,19 +10,6 @@ Game::Game()
     BENCHMARK;
 
     mWindow.SetCloseCallback(std::bind(&Game::CloseWindowCallback, std::ref(*this)));
-
-    std::random_device randomNumberGenerator;
-    std::mt19937 randomNumberEngine(randomNumberGenerator());
-    std::uniform_real_distribution<float> randomNumberDistributer(0.0f, 1.0f);
-
-    for (int i = 0; i < 10000; ++i)
-    {
-        BasicVector<float, 3> vector;
-        std::generate(vector.begin(), vector.end(), std::bind(randomNumberDistributer, std::ref(randomNumberEngine)));
-
-        std::sort(vector.begin(), vector.end());
-    }
-    mWindowShouldClose = true;
 }
 
 Game::~Game()

@@ -2,8 +2,6 @@
 #include "RawVector.h"
 #include "Source/Iterator/RandomAccessIterator.h"
 
-// Things to add:
-// cout support
 template<class T, int N>
 requires (N >= 2)
 class BasicVector : public RawVector<T, N>
@@ -159,6 +157,12 @@ public:
 private:
 	using Base = RawVector<T, N>;
 };
+
+template<class T, int N>
+std::ostream& operator<<(std::ostream& ostream, const BasicVector<T, N>& vector)
+{
+	return ostream << vector.GetString();
+}
 
 template<class T>
 using BasicVector2 = BasicVector<T, 2>;

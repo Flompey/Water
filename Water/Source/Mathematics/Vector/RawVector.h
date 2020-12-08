@@ -1,12 +1,13 @@
 #pragma once
 #include "Source/Iterator/Container/ContainerBase.h"
+#include <sstream>
 
 template<class T, int N>
 struct RawVector : public ContainerBase<T>
 {
 	RawVector(const std::initializer_list<T>& values)
 	{
-		std::copy(values.begin(), values.end(), this.values);
+		std::copy(values.begin(), values.end(), this->values);
 	}
 	RawVector()
 	{
@@ -24,7 +25,20 @@ struct RawVector : public ContainerBase<T>
 	{
 		return &values[0];
 	}
+	std::string GetString() const
+	{
+		std::ostringstream ostringstream;
+		std::transform(std::begin(values), std::end(values), std::ostream_iterator<std::string>(ostringstream),
+			[](T value)
+			{
+				return std::to_string(value) + ", ";
+			});
+		std::string string = ostringstream.str();
+		// Remove the last two characters ", "
+		string.erase(string.size() - 2, 2);
 
+		return "(" + string + ")";
+	}
 	T values[N];
 };
 
@@ -46,7 +60,10 @@ struct RawVector<T, 2> : public ContainerBase<T>
 	{
 		return &x;
 	}
-
+	std::string GetString() const
+	{
+		return "x: " + std::to_string(x) + " y: " + std::to_string(y);
+	}
 	T x = (T)0;
 	T y = (T)0;
 };
@@ -70,7 +87,10 @@ struct RawVector<T, 3> : public ContainerBase<T>
 	{
 		return &x;
 	}
-
+	std::string GetString() const
+	{
+		return "x: " + std::to_string(x) + " y: " + std::to_string(y) + " z: " + std::to_string(z);
+	}
 	T x = (T)0;
 	T y = (T)0;
 	T z = (T)0;
@@ -96,7 +116,10 @@ struct RawVector<T, 4> : public ContainerBase<T>
 	{
 		return &x;
 	}
-
+	std::string GetString() const
+	{
+		return "x: " + std::to_string(x) + " y: " + std::to_string(y) + " z: " + std::to_string(z) + " w: " + std::to_string(w);
+	}
 	T x = (T)0;
 	T y = (T)0;
 	T z = (T)0;
