@@ -123,5 +123,5 @@ struct RawVector<T, 4> : public ContainerBase<T>
 	T x = (T)0;
 	T y = (T)0;
 	T z = (T)0;
-	T w = (T)1;
+	T w = (T)0;
 };

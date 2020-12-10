@@ -3,11 +3,12 @@
 #include "Source/Iterator/RandomAccessIterator.h"
 
 template<class T, int N>
-requires (N >= 2)
+requires (N >= 2 && std::is_arithmetic_v<T>)
 class BasicVector : public RawVector<T, N>
 {
 public:
 	using Iterator = RandomAccessIterator<T>;
+	using ConstIterator = ConstRandomAccessIterator<T>;
 	template<class... ArgTypes>
 	requires(sizeof...(ArgTypes) == N)
 	BasicVector(ArgTypes... arguments)
@@ -34,18 +35,33 @@ public:
 	{
 		return Iterator(Base::GetPointerToData(), Base::GetContainerDebugInfo());
 	}
+	[[nodiscard]] ConstIterator begin() const
+	{
+		// We remove the const from "*this", so that the const iterator can access and modify the 
+		// container debug info. Container debug info is safe to modify for const vectors, since 
+		// it can not actually change the data of the vector
+		return ConstIterator(Base::GetPointerToData(), const_cast<BasicVector&>(*this).GetContainerDebugInfo());
+	}
 	[[nodiscard]] Iterator end()
 	{
 		return Iterator(Base::GetPointerToData()+N, Base::GetContainerDebugInfo());
 	}
+	[[nodiscard]] ConstIterator end() const
+	{
+		// We remove the const from "*this", so that the const iterator can access and modify the 
+		// container debug info. Container debug info is safe to modify for const vectors, since 
+		// it can not actually change the data of the vector
+		return ConstIterator(Base::GetPointerToData() + N, const_cast<BasicVector&>(*this).GetContainerDebugInfo());
+	}
 
 	[[nodiscard]] T& operator[](size_t index)
 	{
+		assert(index >= 0 && index < N);
 		return Base::GetPointerToData()[index];
 	}
 	[[nodiscard]] const T& operator[](size_t index) const
 	{
-		return Base::GetPointerToData()[index];
+		return const_cast<BasicVector&>(*this)[index];
 	}
 
 	[[nodiscard]] T GetLengthSquared() const
@@ -120,39 +136,27 @@ public:
 
 	[[nodiscard]] BasicVector operator+(const BasicVector& other) const
 	{
-		BasicVector sum;
-		for (int i = 0; i < N; ++i)
-		{
-			sum[i] = (*this)[i] + other[i];
-		}
-		return sum;
+		BasicVector temporary = *this;
+		temporary += other;
+		return temporary;
 	}
 	[[nodiscard]] BasicVector operator-(const BasicVector& other) const
 	{
-		BasicVector difference;
-		for (int i = 0; i < N; ++i)
-		{
-			difference[i] = (*this)[i] - other[i];
-		}
-		return difference;
+		BasicVector temporary = *this;
+		temporary -= other;
+		return temporary;
 	}
 	[[nodiscard]] BasicVector operator*(T value) const
 	{
-		BasicVector product;
-		for (int i = 0; i < N; ++i)
-		{
-			product[i] = (*this)[i] * value;
-		}
-		return product;
+		BasicVector temporary = *this;
+		temporary *= value;
+		return temporary;
 	}
 	[[nodiscard]] BasicVector operator/(T value) const
 	{
-		BasicVector quotient;
-		for (int i = 0; i < N; ++i)
-		{
-			quotient[i] = (*this)[i] / value;
-		}
-		return quotient;
+		BasicVector temporary = *this;
+		temporary /= value;
+		return temporary;
 	}
 private:
 	using Base = RawVector<T, N>;
