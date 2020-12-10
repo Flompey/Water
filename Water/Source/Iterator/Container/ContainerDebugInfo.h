@@ -1,7 +1,7 @@
 #pragma once
 
 template<class T>
-class RandomAccessIteratorDebugBase;
+class ConstRandomAccessIteratorDebugBase;
 
 // Contains information used by iterators in debug mode
 template<class T>
@@ -18,14 +18,14 @@ public:
 	{
 		InvalidateIterators();
 	}
-	void AddIterator(RandomAccessIteratorDebugBase<T>* iterator)
+	void AddIterator(ConstRandomAccessIteratorDebugBase<T>* iterator)
 	{
 		// Make sure that we have not added this iterator already
 		assert(std::find(mActiveIterators.begin(), 
 			mActiveIterators.end(), iterator) == mActiveIterators.end());
 		mActiveIterators.push_back(iterator);
 	}
-	void RemoveIterator(RandomAccessIteratorDebugBase<T>* iterator)
+	void RemoveIterator(ConstRandomAccessIteratorDebugBase<T>* iterator)
 	{
 		size_t count = mActiveIterators.remove(iterator);
 		// Make sure we removed precisely one iterator
@@ -40,11 +40,11 @@ private:
 		}
 	}
 public:
-	T* begin = nullptr;
-	T* end = nullptr;
+	const T* begin = nullptr;
+	const T* end = nullptr;
 private:
 	// All the current iterators that points to data inside the associated
 	// container. The only reason they are stored is to be able to, for debug purposes,
 	// invalidate them.
-	std::list<RandomAccessIteratorDebugBase<T>*> mActiveIterators;
+	std::list<ConstRandomAccessIteratorDebugBase<T>*> mActiveIterators;
 };

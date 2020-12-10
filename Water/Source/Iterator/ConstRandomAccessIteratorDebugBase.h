@@ -3,10 +3,10 @@
 
 // An iterator class that wants to user error-checking should inherit from this class
 template<class T>
-class RandomAccessIteratorDebugBase
+class ConstRandomAccessIteratorDebugBase
 {
 public:
-	RandomAccessIteratorDebugBase& operator=(const RandomAccessIteratorDebugBase& other)
+	ConstRandomAccessIteratorDebugBase& operator=(const ConstRandomAccessIteratorDebugBase& other)
 	{
 		if (HasContainer())
 		{
@@ -21,11 +21,11 @@ public:
 
 		return *this;
 	}
-	RandomAccessIteratorDebugBase(const RandomAccessIteratorDebugBase& other)
+	ConstRandomAccessIteratorDebugBase(const ConstRandomAccessIteratorDebugBase& other)
 	{
 		*this = other;
 	}
-	RandomAccessIteratorDebugBase() = default;
+	ConstRandomAccessIteratorDebugBase() = default;
 protected:
 	void SetContainerDebugInfo(ContainerDebugInfo<T>* vectorDebugInfo)
 	{

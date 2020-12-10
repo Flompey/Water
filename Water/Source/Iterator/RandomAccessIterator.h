@@ -1,33 +1,8 @@
 #pragma once
-#include "RandomAccessIteratorDebugBase.h"
-#include "RandomAccessIteratorReleaseBase.h"
-#include "IteratorMacro.h"
+#include "ConstRandomAccessIterator.h"
 
-#if ENABLE_ITERATOR_ERROR_CHECKING
 template<class T>
-using RandomAccessIteratorBase = RandomAccessIteratorDebugBase<T>;
-#else
-template<class T>
-using RandomAccessIteratorBase = RandomAccessIteratorReleaseBase<T>;
-#endif
-
-#if ENABLE_ITERATOR_ERROR_CHECKING
-#define ASSERT_POINTER_IS_GREATER_THAN_BEGIN(pointer) \
-	assert(pointer > RandomAccessIteratorDebugBase<T>::GetContainerDebugInfo()->begin)
-#define ASSERT_POINTER_IS_GEQUAL_TO_BEGIN(pointer) \
-	assert(pointer >= RandomAccessIteratorDebugBase<T>::GetContainerDebugInfo()->begin)
-#define ASSERT_POINTER_IS_LESS_THAN_END(pointer) \
-	assert(pointer < RandomAccessIteratorDebugBase<T>::GetContainerDebugInfo()->end)
-#define ASSERT_POINTER_IS_LEQUAL_TO_END(pointer) \
-	assert(pointer <= RandomAccessIteratorDebugBase<T>::GetContainerDebugInfo()->end)
-#else
-#define ASSERT_POINTER_IS_GREATER_THAN_BEGIN(pointer)
-#define ASSERT_POINTER_IS_GEQUAL_TO_BEGIN(pointer)
-#define ASSERT_POINTER_IS_LESS_THAN_END(pointer)
-#define ASSERT_POINTER_IS_LEQUAL_TO_END(pointer)
-#endif
-template<class T>
-class RandomAccessIterator : public RandomAccessIteratorBase<T>
+class RandomAccessIterator : public ConstRandomAccessIterator<T>
 {
 public:
 	using iterator_category = std::random_access_iterator_tag;
@@ -35,151 +10,83 @@ public:
 	using difference_type = ptrdiff_t;
 	using pointer = T*;
 	using reference = T&;
+	
+	using Base = ConstRandomAccessIterator<T>;
+	// Inherit the const iterator's constructors
+	using Base::Base;
 
-	RandomAccessIterator(T* pointer, ContainerDebugInfo<T>* vectorDebugInfo)
-	{
-		Base::SetContainerDebugInfo(vectorDebugInfo);
-		Base::AddToContainer();
-		assert(pointer);
-		ASSERT_POINTER_IS_GEQUAL_TO_BEGIN(pointer);
-		ASSERT_POINTER_IS_LEQUAL_TO_END(pointer);
-		mPointer = pointer;
-		
-	}
-	RandomAccessIterator() = default;
-	~RandomAccessIterator()
-	{
-		if (Base::HasContainer())
-		{
-			Base::RemoveFromContainer();
-		}
-	}
-
-	[[nodiscard]] bool operator==(const RandomAccessIterator& other) const
-	{
-		assert(IsCompatible(other));
-		return mPointer == other.mPointer;
-	}
-	[[nodiscard]] bool operator!=(const RandomAccessIterator& other) const
-	{
-		// The assertion occurs inside operator==
-		return !(mPointer == other.mPointer);
-	}
-
+	// Overload the access operators to return references
+	// instead of const references
 	[[nodiscard]] T& operator*() const
 	{
-		assert(Base::HasContainer());
-		ASSERT_POINTER_IS_GEQUAL_TO_BEGIN(mPointer);
-		ASSERT_POINTER_IS_LESS_THAN_END(mPointer);
-		return *mPointer;
+		return const_cast<T&>(Base::operator*());
 	}
 	[[nodiscard]] T& operator->() const
 	{
-		// The assertion occurs inside operator*
-		return *(*this);
+		return const_cast<T&>(Base::operator*());
 	}
+	[[nodiscard]] T& operator[](difference_type index) const
+	{
+		return const_cast<T&>(Base::operator[](index));
+	}
+
+	// Overload all of the operators that would have returned
+	// a const iterator and make them return a non-const iterator instead
 
 	RandomAccessIterator& operator++()
 	{
-		assert(Base::HasContainer());
-		ASSERT_POINTER_IS_LESS_THAN_END(mPointer);
-		mPointer++;
+		Base::operator++();
 		return *this;
 	}
 	RandomAccessIterator operator++(int)
 	{
-		// The assertion occurs inside operator++
 		RandomAccessIterator temporary = *this;
-		++(*this);
+		Base::operator++();
 		return temporary;
 	}
 
 	// LegacyBidirectionalIterator operations
 	RandomAccessIterator& operator--()
 	{
-		assert(Base::HasContainer());
-		ASSERT_POINTER_IS_GREATER_THAN_BEGIN(mPointer);
-		mPointer--;
+		Base::operator--();
 		return *this;
 	}
 	RandomAccessIterator operator--(int)
 	{
-		// The assertion occurs inside operator--
 		RandomAccessIterator temporary = *this;
-		--(*this);
+		Base::operator--();
 		return temporary;
 	}
 
 	// LegacyRandomAccessIterator operations
 	RandomAccessIterator& operator+=(difference_type value)
 	{
-		assert(Base::HasContainer());
-		ASSERT_POINTER_IS_GEQUAL_TO_BEGIN(mPointer + value);
-		ASSERT_POINTER_IS_LEQUAL_TO_END(mPointer + value);
-		mPointer += value;
+		Base::operator+=(value);
 		return *this;
 	}
 	RandomAccessIterator& operator-=(difference_type value)
 	{
-		// The assertion occurs inside operator+=
-		return (*this) += -value;
+		Base::operator-=(value);
+		return *this;
 	}
 	[[nodiscard]] RandomAccessIterator operator+(difference_type value) const
 	{
-		// The assertion occurs inside operator+=
 		RandomAccessIterator temporary = *this;
 		temporary += value;
 		return temporary;
 	}
 	[[nodiscard]] RandomAccessIterator operator-(difference_type value) const
 	{
-		// The assertion occurs inside operator+=
 		return (*this) + (-value);
 	}
+	
+	// Since we already overloaded a minus operator, we need to overload all of the minus 
+	// operators, even though this one does not return an iterator
 	[[nodiscard]] difference_type operator-(const RandomAccessIterator& other) const
 	{
-		assert(IsCompatible(other));
-		return difference_type(mPointer - other.mPointer);
+		return Base::operator-(other);
 	}
 
-	[[nodiscard]] T& operator[](difference_type index) const
-	{
-		assert(Base::HasContainer());
-		ASSERT_POINTER_IS_GEQUAL_TO_BEGIN(mPointer);
-		ASSERT_POINTER_IS_LESS_THAN_END(mPointer);
-		return *(mPointer + index);
-	}
-
-	[[nodiscard]] bool operator<(const RandomAccessIterator& other) const
-	{
-		assert(IsCompatible(other));
-		return mPointer < other.mPointer;
-	}
-	[[nodiscard]] bool operator>(const RandomAccessIterator& other) const
-	{
-		// The assertion occurs inside operator<
-		return other < *this;
-	}
-	[[nodiscard]] bool operator<=(const RandomAccessIterator& other) const
-	{
-		// The assertion occurs inside operator<
-		return !(*this > other);
-	}
-	[[nodiscard]] bool operator>=(const RandomAccessIterator& other) const
-	{
-		// The assertion occurs inside operator<
-		return !(*this < other);
-	}
-
-private:
-	bool IsCompatible(const RandomAccessIterator& other) const
-	{
-		return Base::GetContainerDebugInfo() == other.GetContainerDebugInfo();
-	}
-private:
-	using Base = RandomAccessIteratorBase<T>;
-	friend class ContainerDebugInfo<T>;
-	T* mPointer = nullptr;
 };
 
 template<class T>
