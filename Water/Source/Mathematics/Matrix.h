@@ -1,7 +1,6 @@
 #pragma once
 #include "Vector/Vector.h"
 #include "Algorithms.h"
-#include <iomanip>
 #include "../Window/Window.h"
 
 struct MatrixIdentityFlag
