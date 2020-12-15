@@ -111,6 +111,7 @@ public:
 		{
 			(*this)[i] += other[i];
 		}
+		return *this;
 	}
 	BasicVector& operator-=(const BasicVector& other)
 	{
@@ -118,6 +119,7 @@ public:
 		{
 			(*this)[i] -= other[i];
 		}
+		return *this;
 	}
 	BasicVector& operator*=(T value)
 	{
@@ -125,6 +127,7 @@ public:
 		{
 			(*this)[i] *= value;
 		}
+		return *this;
 	}
 	BasicVector& operator/=(T value)
 	{
@@ -132,6 +135,7 @@ public:
 		{
 			(*this)[i] /= value;
 		}
+		return *this;
 	}
 
 	[[nodiscard]] BasicVector operator+(const BasicVector& other) const

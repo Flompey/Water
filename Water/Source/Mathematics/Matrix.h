@@ -51,13 +51,13 @@ public:
 	// The matrix gets filled with only zeros
 	BasicMatrix() = default;
 
-	[[nodiscard]] T* GetDataPointer()
+	[[nodiscard]] T* GetPointerToData()
 	{
 		return &(mColumns[0][0]);
 	}
-	[[nodiscard]] const T* GetDataPointer() const
+	[[nodiscard]] const T* GetPointerToData() const
 	{
-		return const_cast<BasicMatrix&>(*this)(GetDataPointer());
+		return const_cast<BasicMatrix&>(*this).GetPointerToData();
 	}
 
 	[[nodiscard]] Column& operator[](size_t index)
@@ -218,7 +218,7 @@ namespace matrix
 	}
 	
 	template<class T>
-	BasicMatrix4<T> GetProjectionMatrix(const T left, const T right,
+	BasicMatrix4<T> GetProjection(const T left, const T right,
 										const T top, const T bottom,
 										const T near, const T far)
 	{
@@ -230,13 +230,13 @@ namespace matrix
 	}
 
 	template<class T>
-	BasicMatrix4<T> GetProjectionMatrix(const T fovY, const T near, const T far)
+	BasicMatrix4<T> GetProjection(const T fovY, const T near, const T far)
 	{
-		T top = near * tan(fovY / 2);
+		T top = near * tan(fovY / (T)2);
 		T bottom = -top;
 		T aspectRatio = (T)Window::GetWidth() / (T)Window::GetHeight();
 		T right = aspectRatio * top;
 		T left = -right;
-		return GetProjectionMatrix(left, right, top, bottom, near, far);
+		return GetProjection(left, right, top, bottom, near, far);
 	}
 }
