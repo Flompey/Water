@@ -17,14 +17,17 @@ public:
 
 	static int GetWidth();
 	static int GetHeight();
-	
+	static void SetCursorPosition(double xPosition, double yPosition);
+
 	bool ShouldClose() const;
 	void SetCloseCallback(std::function<void()> callback);
+	void SetCursorCallback(std::function<void(double, double)> callback);
 
 	void SwapBuffers() const;
 	void PollEvents() const;
 private:
 	static void CloseCallback(GLFWwindow* window);
+	static void CursorCallback(GLFWwindow* window, double xPosition, double yPosition);
 
 	void InitializeGLFW(const std::string& title);
 	void InitializeGLEW() const;
@@ -37,6 +40,7 @@ private:
 
 	GLFWwindow* mGlfwWindow = nullptr;
 	std::function<void()> mCloseCallback = [](){};
+	std::function<void(double, double)> mCursorCallback = [](double, double) {};
 
 	int mWidth = 0;
 	int mHeight = 0;
