@@ -17,6 +17,7 @@
     <ClCompile Include="Source\Window\Window.cpp" />
     <ClCompile Include="Source\Rendering\Shader.cpp" />
     <ClCompile Include="Source\Rendering\Program.cpp" />
+    <ClCompile Include="Source\Rendering\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\PrecompiledHeader.h" />
@@ -46,7 +47,6 @@
     <ClInclude Include="Source\Iterator\Container\ContainerBase.h" />
     <ClInclude Include="Source\Iterator\IteratorMacro.h" />
     <ClInclude Include="Source\CustomConcepts.h" />
-    <ClInclude Include="Source\Mathematics\Matrix.h" />
     <ClInclude Include="Source\Mathematics\Algorithms.h" />
     <ClInclude Include="Source\Iterator\ConstRandomAccessIterator.h" />
     <ClInclude Include="Source\Iterator\ConstRandomAccessIteratorDebugBase.h" />
@@ -54,6 +54,10 @@
     <ClInclude Include="Source\Rendering\Shader.h" />
     <ClInclude Include="Source\Rendering\Program.h" />
     <ClInclude Include="Source\Rendering\GlMacro.h" />
+    <ClInclude Include="Source\Rendering\Camera.h" />
+    <ClInclude Include="Source\Mathematics\Matrix\Matrix.h" />
+    <ClInclude Include="Source\Mathematics\Matrix\MatrixColumn.h" />
+    <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Shaders\Shader.shader" />
