@@ -1,21 +1,25 @@
 #pragma once
-#include "Vector/Vector.h"
-#include "Algorithms.h"
-#include "../Window/Window.h"
+#include "../Algorithms.h"
+#include "Source/Window/Window.h"
+#include "MatrixColumn.h"
 
-struct MatrixIdentityFlag
-{};
-namespace MatrixConstructionFlags
+namespace matrix
 {
-	inline MatrixIdentityFlag identity;
+	struct IdentityFlag
+	{};
+	namespace constructionflag
+	{
+		inline IdentityFlag identity;
+	}
 }
+
 
 template<class T, int N>
 requires(N >= 2 && std::is_arithmetic_v<T>)
 class BasicMatrix
 {
 public:
-	using Column = BasicVector<T, N>;
+	using Column = BasicMatrixColumn<T, N>;
 	BasicMatrix(const std::initializer_list<Column>& columns)
 	{
 		std::copy(columns.begin(), columns.end(), this->mColumns);
@@ -31,7 +35,7 @@ public:
 	explicit BasicMatrix(const BasicMatrix<T, SmallN>& smallerMatrix)
 		requires(SmallN < N)
 		:
-		BasicMatrix(MatrixConstructionFlags::identity)
+		BasicMatrix(matrix::constructionflag::identity)
 	{
 		for (int i = 0; i < SmallN; ++i)
 		{
@@ -40,7 +44,7 @@ public:
 	}
 
 	// Constructing an identity matrix
-	BasicMatrix(MatrixIdentityFlag)
+	BasicMatrix(matrix::IdentityFlag)
 	{
 		for (int i = 0; i < N; ++i)
 		{
@@ -60,12 +64,12 @@ public:
 		return const_cast<BasicMatrix&>(*this).GetPointerToData();
 	}
 
-	[[nodiscard]] Column& operator[](size_t index)
+	[[nodiscard]] Column& operator[](const size_t index)
 	{
 		assert(index >= 0 && index < N);
 		return mColumns[index];
 	}
-	[[nodiscard]] const Column& operator[](size_t index) const
+	[[nodiscard]] const Column& operator[](const size_t index) const
 	{
 		return const_cast<BasicMatrix&>(*this)[index];
 	}
@@ -111,7 +115,7 @@ private:
 };
 
 template<class T, int N>
-std::vector<std::string> GetColumnAsString(const BasicVector<T, N>& column, const size_t decimalCount)
+std::vector<std::string> GetColumnAsString(const BasicMatrixColumn<T,N>& column, const size_t decimalCount)
 {
 	std::vector<std::string> stringColumn;
 
@@ -187,34 +191,34 @@ namespace matrix
 	template<class T>
 	BasicMatrix3<T> GetRotationX(const T radians)
 	{
-		return BasicMatrix3<T>({ BasicVector3<T>((T)1, (T)0, (T)0),
-								 BasicVector3<T>((T)0, cos(radians), sin(radians)),
-								 BasicVector3<T>((T)0, -sin(radians), cos(radians)) });
+		return BasicMatrix3<T>({ BasicMatrixColumn3<T>((T)1, (T)0, (T)0),
+								 BasicMatrixColumn3<T>((T)0, cos(radians), sin(radians)),
+								 BasicMatrixColumn3<T>((T)0, -sin(radians), cos(radians)) });
 	}
 	// Return the a rotationMatrix that rotates a vector "radians" radians
 	// counterclockwise around the y-axis
 	template<class T>
 	BasicMatrix3<T> GetRotationY(const T radians)
 	{
-		return BasicMatrix3<T>({ BasicVector3<T>((T)cos(radians), (T)0, -sin(radians)),
-								 BasicVector3<T>((T)0, (T)1, (T)0),
-								 BasicVector3<T>((T)sin(radians), (T)0, cos(radians)) });
+		return BasicMatrix3<T>({ BasicMatrixColumn3<T>((T)cos(radians), (T)0, -sin(radians)),
+								 BasicMatrixColumn3<T>((T)0, (T)1, (T)0),
+								 BasicMatrixColumn3<T>((T)sin(radians), (T)0, cos(radians)) });
 	}
 	// Return the a rotationMatrix that rotates a vector "radians" radians
 	// counterclockwise around the z-axis
 	template<class T>
 	BasicMatrix3<T> GetRotationZ(const T radians)
 	{
-		return BasicMatrix3<T>({ BasicVector3<T>((T)cos(radians), -(T)sin(radians), (T)0),
-								 BasicVector3<T>((T)sin(radians), (T)cos(radians), (T)0),
-								 BasicVector3<T>((T)0, (T)0, (T)1) });
+		return BasicMatrix3<T>({ BasicMatrixColumn3<T>((T)cos(radians), -(T)sin(radians), (T)0),
+								 BasicMatrixColumn3<T>((T)sin(radians), (T)cos(radians), (T)0),
+								 BasicMatrixColumn3<T>((T)0, (T)0, (T)1) });
 	}
 	
 	template<class T>
 	BasicMatrix3<T> GetRotation(const T radiansX, const T radiansY, const T radiansZ)
 	{
 		// Rotate first around the y-axis, then around the x-axis and lastly around the z-axis
-		return GetRotationZ(radiansZ)* GetRotationX(radiansX)* GetRotationY(radiansY);
+		return GetRotationZ(radiansZ) * GetRotationX(radiansX) * GetRotationY(radiansY);
 	}
 	
 	template<class T>
@@ -222,11 +226,11 @@ namespace matrix
 										const T top, const T bottom,
 										const T near, const T far)
 	{
-		return BasicMatrix4<T>({ BasicVector4<T>((T)2 * near / (right - left), (T)0, (T)0, (T)0),
-								 BasicVector4<T>((T)0, (T)2 * near / (top - bottom), (T)0, (T)0),
-								 BasicVector4<T>((right + left) / (right - left), (top + bottom) / (top - bottom),
+		return BasicMatrix4<T>({ BasicMatrixColumn4<T>((T)2 * near / (right - left), (T)0, (T)0, (T)0),
+								 BasicMatrixColumn4<T>((T)0, (T)2 * near / (top - bottom), (T)0, (T)0),
+								 BasicMatrixColumn4<T>((right + left) / (right - left), (top + bottom) / (top - bottom),
 									(near + far) / (near - far), (T)-1),
-								 BasicVector4<T>((T)0, (T)0, (T)2 * far * near / (near - far), (T)0) });
+								 BasicMatrixColumn4<T>((T)0, (T)0, (T)2 * far * near / (near - far), (T)0) });
 	}
 
 	template<class T>
