@@ -54,12 +54,12 @@ public:
 		return ConstIterator(Base::GetPointerToData() + N, const_cast<BasicVector&>(*this).GetContainerDebugInfo());
 	}
 
-	[[nodiscard]] T& operator[](size_t index)
+	[[nodiscard]] T& operator[](const size_t index)
 	{
 		assert(index >= 0 && index < N);
 		return Base::GetPointerToData()[index];
 	}
-	[[nodiscard]] const T& operator[](size_t index) const
+	[[nodiscard]] const T& operator[](const size_t index) const
 	{
 		return const_cast<BasicVector&>(*this)[index];
 	}
@@ -69,7 +69,7 @@ public:
 		T lengthSquared = (T)0;
 		for (int i = 0; i < N; ++i)
 		{
-			lengthSquared += pow((*this)[i], 2);
+			lengthSquared += (T)pow((double)(*this)[i], 2.0);
 		}
 		return lengthSquared;
 	}
@@ -79,7 +79,12 @@ public:
 	}
 	void Normalize()
 	{
-		(*this) /= GetLength();
+		T length = GetLength();
+		// Avoid division with 0
+		if (length != (T)0)
+		{
+			(*this) /= GetLength();
+		}
 	}
 	[[nodiscard]] BasicVector GetNormalized()
 	{
@@ -111,6 +116,7 @@ public:
 		{
 			(*this)[i] += other[i];
 		}
+		return *this;
 	}
 	BasicVector& operator-=(const BasicVector& other)
 	{
@@ -118,20 +124,23 @@ public:
 		{
 			(*this)[i] -= other[i];
 		}
+		return *this;
 	}
-	BasicVector& operator*=(T value)
+	BasicVector& operator*=(const T value)
 	{
 		for (int i = 0; i < N; ++i)
 		{
 			(*this)[i] *= value;
 		}
+		return *this;
 	}
-	BasicVector& operator/=(T value)
+	BasicVector& operator/=(const T value)
 	{
 		for (int i = 0; i < N; ++i)
 		{
 			(*this)[i] /= value;
 		}
+		return *this;
 	}
 
 	[[nodiscard]] BasicVector operator+(const BasicVector& other) const
@@ -146,13 +155,13 @@ public:
 		temporary -= other;
 		return temporary;
 	}
-	[[nodiscard]] BasicVector operator*(T value) const
+	[[nodiscard]] BasicVector operator*(const T value) const
 	{
 		BasicVector temporary = *this;
 		temporary *= value;
 		return temporary;
 	}
-	[[nodiscard]] BasicVector operator/(T value) const
+	[[nodiscard]] BasicVector operator/(const T value) const
 	{
 		BasicVector temporary = *this;
 		temporary /= value;
@@ -180,3 +189,8 @@ using BasicVector4 = BasicVector<T, 4>;
 using Vector2 = BasicVector2<float>;
 using Vector3 = BasicVector3<float>;
 using Vector4 = BasicVector4<float>;
+
+namespace vector
+{
+	inline Vector3 up(0.0f, 1.0f, 0.0f);
+}

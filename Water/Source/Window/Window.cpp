@@ -14,6 +14,9 @@ Window::Window(const std::string& title, int width, int height)
     InitializeGLEW();
 
     glfwSetWindowCloseCallback(mGlfwWindow, CloseCallback);
+
+    glfwSetInputMode(mGlfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetCursorPosCallback(mGlfwWindow, CursorCallback);
 }
 
 Window::~Window()
@@ -26,9 +29,19 @@ void Window::SetCloseCallback(std::function<void()> callback)
     mCloseCallback = callback;
 }
 
+void Window::SetCursorCallback(std::function<void(double, double)> callback)
+{
+    msWindow->mCursorCallback = callback;
+}
+
 void Window::CloseCallback(GLFWwindow* window)
 {
     msWindow->mCloseCallback();
+}
+
+void Window::CursorCallback(GLFWwindow* window, const double xPosition, const double yPosition)
+{
+    msWindow->mCursorCallback(xPosition, yPosition);
 }
 
 void Window::InitializeGLFW(const std::string& title)
@@ -76,6 +89,11 @@ int Window::GetHeight()
 {
     assert(msWindow);
     return msWindow->mHeight;
+}
+
+void Window::SetCursorPosition(const double xPosition, const double yPosition)
+{
+    glfwSetCursorPos(msWindow->mGlfwWindow, xPosition, yPosition);
 }
 
 bool Window::ShouldClose() const
