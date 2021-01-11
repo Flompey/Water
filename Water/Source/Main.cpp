@@ -2,7 +2,7 @@
 #include "CustomException.h"
 #include <optional>
 #include "Benchmark/BenchmarkMacros.h"
-#include "Log/ErrorLog.h"
+#include "Console/ErrorLog.h"
 
 int main()
 {

@@ -1,9 +1,9 @@
 #include "BenchmarkManager.h"
 #include "BenchmarkEventFactory.h"
 #include "../CustomException.h"
-#include "../Log/ErrorLog.h"
-#include "../Log/Log.h"
-
+#include "../Console/ErrorLog.h"
+#include "../Console/Log.h"
+#include "../Console/ConsoleInput.h"
 benchmark::Manager::Manager()
 {
 	// Make the file stream throw exceptions
@@ -87,10 +87,13 @@ void benchmark::Manager::SaveBenchmark()
 		{
 			return;
 		}
+		// Make sure that this is the only thread that logs or uses "CIN" during the duration of this scope.
+		// We do not want the output, "LOG", to get detached from the input, "CIN".
+		std::scoped_lock scopedLock(gLogMutex, gConsoleInputMutex);
 
 		LOG("Save benchmark as: ");
 		std::string name;
-		std::cin >> name;
+		CIN(name);
 
 		const long long length = mFile.tellp();
 		auto buffer = std::make_unique<char[]>(length);
@@ -173,22 +176,22 @@ void benchmark::Manager::ReopenFile()
 
 bool benchmark::Manager::UserWantsToSave() const
 {
-	const std::string question = "Do you want to the save the benchmark? Press \"y\" for yes and \"n\" for no: ";
-	LOG(question << std::endl);
+	// Make sure that this is the only thread that logs or uses "CIN" during the duration of this scope.
+	// We do not want the output, "LOG", to get detached from the input, "CIN".
+	std::scoped_lock scopedLock(gLogMutex, gConsoleInputMutex);
+
 	std::string input;
 
 	// Loop until user answers question
 	while (true)
 	{
-		std::cin >> input;
+		// User inputs incorrect value, re-ask the question
+		LOG("Do you want to the save the benchmark? Press \"y\" for yes and \"n\" for no: " << std::endl);
+
+		CIN(input);
 		if (input == "y" || input == "n")
 		{
 			break;
-		}
-		else
-		{
-			// User inputs incorrect value, re-ask the question
-			LOG(question << std::endl);
 		}
 	}
 	return input == "y";
