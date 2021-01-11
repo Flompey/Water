@@ -27,13 +27,13 @@ struct RawVector : public ContainerBase<T>
 	}
 	std::string GetString() const
 	{
-		std::ostringstream ostringstream;
-		std::transform(std::begin(values), std::end(values), std::ostream_iterator<std::string>(ostringstream),
+		std::ostringstream oStringStream;
+		std::transform(std::begin(values), std::end(values), std::ostream_iterator<std::string>(oStringStream),
 			[](T value)
 			{
 				return std::to_string(value) + ", ";
 			});
-		std::string string = ostringstream.str();
+		std::string string = oStringStream.str();
 		// Remove the last two characters ", "
 		string.erase(string.size() - 2, 2);
 

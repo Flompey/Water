@@ -4,15 +4,15 @@
 benchmark::Event::Event(std::initializer_list<std::pair<std::string, std::string>> attributesAndValues)
 {
 	// Make a stringstream to enable the use of ostream iterators
-	std::stringstream stringstream;
+	std::stringstream stringStream;
 	std::transform(attributesAndValues.begin(), attributesAndValues.end(),
-		std::ostream_iterator<std::string>(stringstream, ","), [](const auto& p)
+		std::ostream_iterator<std::string>(stringStream, ","), [](const auto& p)
 		{
 			const auto&[attribute, value] = p;
 			return "\"" + attribute + "\": " + value;
 		});
 	
-	mData = stringstream.str();
+	mData = stringStream.str();
 
 	// Remove the last delimiter ","
 	mData.resize(mData.size() - 1);

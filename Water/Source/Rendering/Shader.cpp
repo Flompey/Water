@@ -102,10 +102,10 @@ void Shader::AddLineNumbersToString(std::string& string) const
 
 GLenum Shader::GetType(std::string& shaderSource, std::string& typeAsString) const
 {
-	std::istringstream istringstream(shaderSource);
-	istringstream >> typeAsString;
+	std::istringstream iStringStream(shaderSource);
+	iStringStream >> typeAsString;
 	// Remove the type identifier from the shader's source
-	shaderSource = shaderSource.substr(istringstream.tellg());
+	shaderSource = shaderSource.substr(iStringStream.tellg());
 	auto iterator = msStringToType.find(typeAsString);
 	if (iterator == msStringToType.end())
 	{
