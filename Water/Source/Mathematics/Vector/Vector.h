@@ -30,6 +30,16 @@ public:
 	{
 		Base::InitializeContainerDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
 	}
+	template<class TOther>
+	explicit BasicVector(const BasicVector<TOther, N>& other)
+	{
+		Base::InitializeContainerDebugInfo(Base::GetPointerToData(), Base::GetPointerToData() + N);
+		std::transform(other.begin(), other.end(), begin(),
+			[](const TOther value)
+			{
+				return T(value);
+			});
+	}
 	
 	[[nodiscard]] Iterator begin()
 	{
@@ -189,6 +199,10 @@ using BasicVector4 = BasicVector<T, 4>;
 using Vector2 = BasicVector2<float>;
 using Vector3 = BasicVector3<float>;
 using Vector4 = BasicVector4<float>;
+
+using Vector2i = BasicVector2<int>;
+using Vector3i = BasicVector3<int>;
+using Vector4i = BasicVector4<int>;
 
 namespace vector
 {
