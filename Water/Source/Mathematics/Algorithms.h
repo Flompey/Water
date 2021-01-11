@@ -29,3 +29,21 @@ T ConvertDegreesToRadians(T degrees)
 {
 	return (degrees / (T)360) * (T)2 * (T)M_PI;
 }
+
+template<class T, class ScalarT>
+T Lerp(const T& a, const T& b, ScalarT t)
+{
+	return a + (b - a) * t;
+}
+
+constexpr int Power(const int value, const int exponent)
+{
+	int result = 1;
+
+	for (int i = 0; i < exponent; ++i)
+	{
+		result *= value;
+	}
+
+	return result;
+}
