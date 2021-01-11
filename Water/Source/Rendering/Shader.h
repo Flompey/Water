@@ -29,8 +29,8 @@ private:
 	{
 		{"Vertex", GL_VERTEX_SHADER},
 		{"Fragment", GL_FRAGMENT_SHADER},
-		{"TesselationControl", GL_TESS_CONTROL_SHADER},
-		{"TesselationEvaluation", GL_TESS_EVALUATION_SHADER},
+		{"TessellationControl", GL_TESS_CONTROL_SHADER},
+		{"TessellationEvaluation", GL_TESS_EVALUATION_SHADER},
 		{"Geometry", GL_GEOMETRY_SHADER},
 		{"Compute", GL_COMPUTE_SHADER}
 	};
