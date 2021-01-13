@@ -1,5 +1,38 @@
 #pragma once
 
+template<std::integral T>
+constexpr bool IsPowerOfTwo(const T value)
+{
+    assert(value > 0);
+
+    if (value == 1)
+    {
+        // 2 ^ 0 = 1
+        return true;
+    }
+
+    float half = (float)value / 2.0f;
+
+    // If "half" at any point is equal to 1, we know that the number is a power of 2
+    while (half != 1.0f)
+    {
+        int halfInt = (int)half;
+        // Test whether or not half is a whole number, i.e., if half * 2 was
+        // evenly divisible by 2
+        if (float(halfInt) != half)
+        {
+            // If half * 2 was not evenly divisible by 2, the number
+            // is not a power of 2
+            return false;
+        }
+
+        half /= 2.0f;
+    }
+
+    // At some point "half" was equal to 1, so we know that the number is a power of 2
+    return true;
+}
+
 template<class T>
 concept Clock = requires
 {
