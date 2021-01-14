@@ -19,12 +19,16 @@ public:
 	}
 	T operator[](const size_t index) const
 	{
-		assert(index >= 0 && index < N * 2 - 1);
+		assert(index >= 0 && index < Size());
 		return mPermutationTable[index];
 	}
 	T* GetPointerToData()
 	{
 		return mPermutationTable;
+	}
+	size_t Size() const
+	{
+		return N * 2 - 1;
 	}
 private:
 	// Contains random indices that ranges from 0 to N - 1. The input into the 
