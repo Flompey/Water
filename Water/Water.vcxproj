@@ -74,11 +74,13 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Binaries\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Binaries\Intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Binaries\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)Binaries\Intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -176,11 +178,16 @@
     <ClCompile Include="Source\Benchmark\BenchmarkEventFactory.cpp" />
     <ClCompile Include="Source\Benchmark\BenchmarkManager.cpp" />
     <ClCompile Include="Source\Benchmark\BenchmarkSession.cpp" />
+    <ClCompile Include="Source\Cube.cpp" />
     <ClCompile Include="Source\CustomException.cpp" />
     <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\Rendering\PngLoader.cpp" />
     <ClCompile Include="Source\Rendering\Camera.cpp" />
+    <ClCompile Include="Source\Rendering\PostProcessor.cpp" />
     <ClCompile Include="Source\Rendering\Program.cpp" />
     <ClCompile Include="Source\Rendering\Shader.cpp" />
+    <ClCompile Include="Source\Rendering\Texture.cpp" />
+    <ClCompile Include="Source\Water.cpp" />
     <ClCompile Include="Source\Window\WindowAccessSpecifier.cpp" />
     <ClCompile Include="Source\Keyboard.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -201,8 +208,12 @@
     <ClInclude Include="Source\Benchmark\BenchmarkSession.h" />
     <ClInclude Include="Source\Benchmark\BenchmarkMacros.h" />
     <ClInclude Include="Source\Benchmark\BenchmarkTimer.h" />
+    <ClInclude Include="Source\Console\ConsoleInput.h" />
+    <ClInclude Include="Source\Console\ConsoleInputMutex.h" />
+    <ClInclude Include="Source\Cube.h" />
     <ClInclude Include="Source\CustomConcepts.h" />
     <ClInclude Include="Source\CustomException.h" />
+    <ClInclude Include="Source\DynamicVariableManager.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Iterator\ConstRandomAccessIterator.h" />
     <ClInclude Include="Source\Iterator\Container\ContainerBase.h" />
@@ -210,6 +221,7 @@
     <ClInclude Include="Source\Iterator\Container\ContainerDebugBase.h" />
     <ClInclude Include="Source\Iterator\Container\ContainerReleaseBase.h" />
     <ClInclude Include="Source\Iterator\IteratorMacro.h" />
+    <ClInclude Include="Source\Console\LogMutex.h" />
     <ClInclude Include="Source\Mathematics\Algorithms.h" />
     <ClInclude Include="Source\Mathematics\Matrix\MatrixColumn.h" />
     <ClInclude Include="Source\Mathematics\Matrix\Matrix.h" />
@@ -218,20 +230,40 @@
     <ClInclude Include="Source\Iterator\RandomAccessIterator.h" />
     <ClInclude Include="Source\Iterator\ConstRandomAccessIteratorDebugBase.h" />
     <ClInclude Include="Source\Iterator\ConstRandomAccessIteratorReleaseBase.h" />
+    <ClInclude Include="Source\Noise\PerlinNoise.h" />
+    <ClInclude Include="Source\Noise\PermutationTable.h" />
+    <ClInclude Include="Source\Noise\RandomValueTable.h" />
+    <ClInclude Include="Source\Rendering\PngLoader.h" />
     <ClInclude Include="Source\Rendering\Camera.h" />
     <ClInclude Include="Source\Rendering\GlMacro.h" />
+    <ClInclude Include="Source\Rendering\PostProcessor.h" />
     <ClInclude Include="Source\Rendering\Program.h" />
     <ClInclude Include="Source\Rendering\Shader.h" />
+    <ClInclude Include="Source\Rendering\Texture.h" />
+    <ClInclude Include="Source\Rendering\Vertex.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Noise\ValueNoise.h" />
+    <ClInclude Include="Source\Water.h" />
     <ClInclude Include="Source\Window\WindowAccessSpecifier.h" />
     <ClInclude Include="Source\Keyboard.h" />
-    <ClInclude Include="Source\Log\ErrorLog.h" />
-    <ClInclude Include="Source\Log\Log.h" />
+    <ClInclude Include="Source\Console\ErrorLog.h" />
+    <ClInclude Include="Source\Console\Log.h" />
     <ClInclude Include="Source\PrecompiledHeader.h" />
     <ClInclude Include="Source\Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Source\Shaders\Shader.shader" />
+    <None Include="Source\Shaders\Default.shader" />
+    <None Include="Source\Shaders\NoEffect.shader" />
+    <None Include="Source\Shaders\Water.shader" />
+    <None Include="Source\Shaders\WaterDistortion.shader" />
+    <None Include="Source\Shaders\WaterEffect.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Source\DynamicVariableFiles\WaterFactors.txt" />
+    <Text Include="Source\DynamicVariableFiles\WaterFactors2.txt" />
+    <Text Include="Source\DynamicVariableFiles\WaterFactors3.txt" />
+    <Text Include="Source\DynamicVariableFiles\WaterFactors5.txt" />
+    <Text Include="Source\DynamicVariableFiles\WaterFactors6.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
