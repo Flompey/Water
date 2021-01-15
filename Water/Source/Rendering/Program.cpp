@@ -32,8 +32,11 @@ Program::Program(const std::string& filename)
 
 Program::~Program()
 {
-	// Destructors should not throw exception, hence no GL macro
-	glDeleteProgram(mProgramName);
+	if (mContainsGlProgram)
+	{
+		// Destructors should not throw exception, hence no GL macro
+		glDeleteProgram(mProgramName);
+	}
 }
 
 Program::Program(Program&& other) noexcept
@@ -55,6 +58,7 @@ Program& Program::operator=(Program&& other) noexcept
 
 void Program::Bind() const
 {
+	assert(mContainsGlProgram);
 	GL(glUseProgram(mProgramName));
 }
 
