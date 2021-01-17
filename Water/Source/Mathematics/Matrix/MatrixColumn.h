@@ -9,7 +9,7 @@ public:
 	requires(sizeof...(Types) == N)
 		BasicMatrixColumn(Types... values)
 	{
-		std::initializer_list<T> valueList({ values... });
+		std::initializer_list<T> valueList{ values... };
 		std::copy(valueList.begin(), valueList.end(), begin());
 	}
 	BasicMatrixColumn()
