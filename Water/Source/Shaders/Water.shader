@@ -398,7 +398,7 @@ void main()
 	vec3 reflectedRay = reflect(TO_SUN * -1.0, normal);
 	float specular = dot(reflectedRay, toCamera);
 	specular = max(specular, 0.0);
-	specular = pow(specular, 10.0);
+	specular = pow(specular, 20.0) * 0.1;
 
 	// Calculate diffuse lighting
 	float brightness = max(dot(normal, TO_SUN), 0.1);
